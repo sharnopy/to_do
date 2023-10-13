@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/myprovider.dart';
@@ -44,26 +44,35 @@ class _settingsState extends State<settings> {
             },
             child: Container(
              child: Text(AppLocalizations.of(context)!.arabic),
-         ),
+            ),
           ),
-
           SizedBox(
             height: 20,
           ),
-          Text(AppLocalizations.of(context)! .mood,style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w700,
-              fontSize: 14
-          ),),
-          Container(
-            child: Text(AppLocalizations.of(context)!.dark),
+          Text(
+            AppLocalizations.of(context)!.mood,
+            style:
+                GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 14),
+          ),
+          InkWell(
+            onTap: () {
+              provider.changeTheme();
+            },
+            child: Container(
+              child: Text(AppLocalizations.of(context)!.dark),
+            ),
           ),
           SizedBox(
             height: 10,
           ),
-          Container(
-            child: Text(AppLocalizations.of(context)!.light),
+          InkWell(
+            onTap: () {
+              provider.changeTheme();
+            },
+            child: Container(
+              child: Text(AppLocalizations.of(context)!.light),
+            ),
           ),
-
         ],
       ),
     );
