@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../screens/setting/settings_tab.dart';
 import '../screens/tasks/add_task_bottomsheet.dart';
 import '../screens/tasks/tasktap.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class HomeLayout extends StatefulWidget {
   static const String routeName = "HomeLayout";
 
@@ -19,7 +19,7 @@ class _HomeLayoutState extends State<HomeLayout> {
     return Scaffold(
 extendBody: true,
       appBar: AppBar(
-        title: Text(" To Do"),
+        title: Text(AppLocalizations.of(context)! .appTitle),
       ),
       bottomNavigationBar: BottomAppBar(
         notchMargin: 8,
