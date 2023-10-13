@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:newtodo/layout/home_layout.dart';
+import 'package:newtodo/shared/styels/colores.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
         ),
         bottomAppBarTheme: BottomAppBarTheme(
           color: Colors.white,shape: CircularNotchedRectangle(),
-        )
+        ),
+        scaffoldBackgroundColor: mintGreen
       ),
     );
   }

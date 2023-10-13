@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../screens/setting/settings_tab.dart';
+import '../screens/tasks/add_task_bottomsheet.dart';
+import '../screens/tasks/tasktap.dart';
+
 class HomeLayout extends StatefulWidget {
   static const String routeName = "HomeLayout";
 
@@ -13,6 +17,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+extendBody: true,
       appBar: AppBar(
         title: Text(" To Do"),
       ),
@@ -31,10 +36,24 @@ class _HomeLayoutState extends State<HomeLayout> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showBottomSheet();
+        },
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+body: tabs[index],
     );
   }
+  showBottomSheet(){
+    showModalBottomSheet(context: context,
+      isScrollControlled: true,
+      builder: (context) {
+       return Padding(
+         padding:  EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+         child: AddTaskBottomSheet(),
+       );
+    },);
+  }
+  List<Widget> tabs = [TasksTab(), settings()];
 }
