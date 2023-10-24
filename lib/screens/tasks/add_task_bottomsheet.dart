@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:newtodo/models/task_model.dart';
+
+import '../../shared/firebase/firebase_manger.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
 
@@ -98,6 +101,10 @@ var selectedDate=DateTime.now();
           ElevatedButton(
 
               onPressed: () {
+                TaskModel task=TaskModel(title: titleController.text, description: descriptionController.text, date: DateUtils.dateOnly(selectedDate).millisecondsSinceEpoch);
+                FirebaseManger.addTask(task);
+
+
 
           }, child:Text("Add task") )
         ],

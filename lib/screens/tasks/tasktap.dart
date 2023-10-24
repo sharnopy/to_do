@@ -1,25 +1,30 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:newtodo/models/task_model.dart';
 import 'package:newtodo/screens/tasks/task_item.dart';
-
+import 'package:newtodo/shared/firebase/firebase_manger.dart';
 
 class TasksTab extends StatefulWidget {
-  const TasksTab({super.key});
-
   @override
   State<TasksTab> createState() => _TasksTabState();
 }
 
 class _TasksTabState extends State<TasksTab> {
+  DateTime selectedDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CalendarTimeline(
-          initialDate: DateTime.now(),
+          initialDate: selectedDate,
           firstDate: DateTime.now().subtract(Duration(days: 365)),
           lastDate: DateTime.now().add(Duration(days: 365)),
-          onDateSelected: (date) => print(date),
+          onDateSelected: (date) {
+            selectedDate = date;
+            setState(() {});
+          },
           leftMargin: 20,
           monthColor: Colors.blueGrey,
           dayColor: Colors.teal[200],
@@ -30,15 +35,25 @@ class _TasksTabState extends State<TasksTab> {
           locale: 'en_ISO',
         ),
         Expanded(
-            child: ListView.builder(
+            child: StreamBuilder<QuerySnapshot<TaskModel>>(
+          stream : FirebaseManger.getTasks(selectedDate),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return Center(child: Text("something went wrong"));
+            }
+            var tasks = snapshot.data?.docs.map((e) => e.data()).toList() ?? [];
+            return ListView.builder(
               itemBuilder: (context, index) {
-                return TaskItem();
+                return TaskItem(tasks[index]);
               },
-              itemCount: 8,
-            ))
+              itemCount: tasks.length,
+            );
+          },
+        ))
       ],
     );
   }
 }
-
-
